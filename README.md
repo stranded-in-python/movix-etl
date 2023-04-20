@@ -1,15 +1,3 @@
-# The name of Project
+# Заключительное задание первого модуля
 
-Movix django admin
-
-## What is this?
-
-## Why is it good?
-
-## What is under the hood?
-
-## The Use Cases
-
-## How to install
-
-## Disclaimer
+Ваша задача в этом уроке — загрузить данные в Elasticsearch из PostgreSQL. Подробности задания в папке `etl`.
