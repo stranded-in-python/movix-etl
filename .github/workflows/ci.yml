@@ -87,10 +87,10 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ${{ vars.dockerfile_path }}
+          context: "./compose/production/etl/Dockerfile"
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ${{ vars.docker_image }}:unstable
+            ghcr.io/stranded-in-python/movix-etl:unstable
           labels: |
             maintainer=${{ github.actor }}
             build-date=${{ github.event.head_commit.timestamp }}
