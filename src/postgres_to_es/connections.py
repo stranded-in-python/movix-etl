@@ -234,11 +234,7 @@ class PostgresConnectionManager(ConnectionManager):
             return self._execute(cursor, sql, sql_vars).fetchone()
 
     def _fetchmany(
-        self,
-        sql: str,
-        size: int,
-        sql_vars: Any = None,
-        itersize: int = 0,
+        self, sql: str, size: int, sql_vars: Any = None, itersize: int = 0
     ) -> Iterable[Iterable[DictRow]]:
         with closing(self.cursor(itersize)) as cursor:
             self._execute(cursor, sql, sql_vars)
