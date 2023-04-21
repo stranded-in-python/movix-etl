@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+/create_movie_index
+
+/usr/local/bin/python /app/load_data.py
