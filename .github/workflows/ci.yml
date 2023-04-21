@@ -46,7 +46,7 @@ jobs:
       - linter
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Login to GHCR
         if: github.event_name != 'pull_request'
@@ -59,7 +59,7 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
-          context: "./compose/local/etl/Dockerfile"
+          file: "./compose/local/etl/Dockerfile"
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ghcr.io/stranded-in-python/movix-etl:dev
@@ -87,7 +87,7 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
-          context: "./compose/production/etl/Dockerfile"
+          file: "./compose/production/etl/Dockerfile"
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ghcr.io/stranded-in-python/movix-etl:unstable
