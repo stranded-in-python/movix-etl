@@ -1,0 +1,81 @@
+name: "CI: check linting and build images"
+
+# Enable Buildkit and let compose use it to speed up image building
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
+on:
+  pull_request:
+    branches: ["master", "main"]
+    paths-ignore: ["docs/**"]
+
+  push:
+    branches: ["master", "main"]
+    paths-ignore: ["docs/**"]
+
+  workflow_dispatch:
+
+concurrency:
+  group: "build"
+  cancel-in-progress: true
+
+jobs:
+  linter:
+    environment: local
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            requirements/base.txt
+            requirements/local.txt
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
+
+  builder-local:
+    environment: local
+    runs-on: ubuntu-latest
+    depends:
+      - linter
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ vars.dockerfile_path }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ vars.docker_image }}:dev
+          labels: |
+            maintainer=${{ github.actor }}
+            build-date=${{ github.event.head_commit.timestamp }}
+
+  builder-unstable:
+    environment: production
+    runs-on: ubuntu-latest
+    depends:
+      - linter
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ vars.dockerfile_path }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ vars.docker_image }}:unstable
+          labels: |
+            maintainer=${{ github.actor }}
+            build-date=${{ github.event.head_commit.timestamp }}
