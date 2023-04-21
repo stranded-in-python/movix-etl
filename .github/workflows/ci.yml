@@ -42,6 +42,7 @@ jobs:
 
   builder-local:
     runs-on: ubuntu-latest
+    if: ${{ github.action != 'pull_request' }}
     needs:
       - linter
     steps:
@@ -70,6 +71,7 @@ jobs:
   builder-unstable:
     environment: production
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
     needs:
       - linter
     steps:
