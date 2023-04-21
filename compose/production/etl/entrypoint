@@ -33,38 +33,19 @@ END
 }
 
 elastic_ready() {
-python << END
-import sys
-import requests
-
-elastic_server = '${ELASTIC_ENDPOINT}'
-url = f'{elastic_server}/_cluster/health'
-try:
-    response = requests.get(url)
-    if response.ok:
-        sys.exit(0)
-    else:
-        sys.exit(-1)
-except requests.exceptions.RequestException as e:
-  sys.exit(-1)
-END
+  if curl -sSf ${ELASTIC_ENDPOINT}/_cluster/health >/dev/null; then
+    return true
+  else
+    return false
+  fi
 }
 
 django_ready() {
-python << END
-import sys
-import requests
-
-url = '${DJANGO_ENDPOINT}/admin/'
-try:
-    response = requests.get(url)
-    if response.ok:
-        sys.exit(0)
-    else:
-        sys.exit(-1)
-except requests.exceptions.RequestException as e:
-  sys.exit(-1)
-END
+  if curl -sSf ${DJANGO_ENDPOINT}/admin/ >/dev/null; then
+    return true
+  else
+    return false
+  fi
 }
 
 until postgres_ready; do

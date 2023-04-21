@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+start_and_watch_etl() {
+python << END
+from watchfiles import run_process
+
+run_process('/app', "/usr/local/bin/python /app/load_data.py")
+END
+}
+
+start_and_watch_etl
