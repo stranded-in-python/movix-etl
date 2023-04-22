@@ -34,17 +34,17 @@ END
 
 elastic_ready() {
   if curl -sSf ${ELASTIC_ENDPOINT}/_cluster/health >/dev/null; then
-    return true
+    return 0
   else
-    return false
+    return -1
   fi
 }
 
 django_ready() {
   if curl -sSf ${DJANGO_ENDPOINT}/admin/ >/dev/null; then
-    return true
+    return 0
   else
-    return false
+    return -1
   fi
 }
 
