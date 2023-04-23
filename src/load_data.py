@@ -1,5 +1,6 @@
 """Loading data from Postgresql to ElasticSearch"""
 import logging
+import os
 from time import sleep
 
 from postgres_to_es.config.settings import settings
@@ -17,7 +18,7 @@ from postgres_to_es.state import RedisStorage, State
 from postgres_to_es.transformers import FilmWork2MoviesTransformer
 
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logger.setLevel(os.environ.get("ETL_LOG_LEVEL", logging.INFO))
 
 
 class ExtractionManager:
