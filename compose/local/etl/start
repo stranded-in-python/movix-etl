@@ -4,6 +4,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+
 start_and_watch_etl() {
 python << END
 from watchfiles import run_process
@@ -11,5 +12,8 @@ from watchfiles import run_process
 run_process('/app', target="/usr/local/bin/python /app/load_data.py")
 END
 }
+
+
+/create_movie_index
 
 start_and_watch_etl
