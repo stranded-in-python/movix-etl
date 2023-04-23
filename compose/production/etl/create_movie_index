@@ -16,7 +16,7 @@ no_index() {
 
 create_index() {
   echo "No index found, creating..."
-  curl -s -XPUT http://${ELASTIC_ENDPOINT}/movies -H 'Content-Type: application/json' -d'
+  curl -s -XPUT ${ELASTIC_ENDPOINT}/movies -H 'Content-Type: application/json' -d'
   {
     "settings": {
       "refresh_interval": "1s",

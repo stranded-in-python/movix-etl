@@ -74,9 +74,9 @@ class GenreEnricher(PostgresEnricher):
     table_name = "content.genre"
 
     sql = (
-        "select genre.modified, film_work_genre.film_work_id "
-        "from content.genre join content.film_work_genre on "
-        "genre.id = film_work_genre.genre_id where "
+        "select genre.modified, genre_film_work.film_work_id "
+        "from content.genre join content.genre_film_work on "
+        "genre.id = genre_film_work.genre_id where "
         "genre.id in %s;"
     )
 
@@ -88,9 +88,9 @@ class PersonFilmWorkEnricher(PostgresEnricher):
 
 
 class FilmWorkGenreEnricher(PostgresEnricher):
-    table_name = "content.film_work_genre"
+    table_name = "content.genre_film_work"
 
-    sql = "select created, film_work_id from content.film_work_genre where id in %s;"
+    sql = "select created, film_work_id from content.genre_film_work where id in %s;"
 
 
 class EnricherManager(ABC):
