@@ -43,7 +43,7 @@ class PostgresProducer(Producer):
     def scan_table(self, table: str, pack_size: int) -> Iterable:
         state = self.state.get_state(table)
         date_field = "modified"
-        if table in ("content.film_work_genre", "content.person_film_work"):
+        if table in ("content.genre_film_work", "content.person_film_work"):
             date_field = "created"
 
         sql = (

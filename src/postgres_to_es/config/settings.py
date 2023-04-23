@@ -21,7 +21,7 @@ class Settings(BaseSettings):
         ("content.genre", 1),
         ("content.person", 1000),
         ("content.film_work", 1000),
-        ("content.film_work_genre", 1000),
+        ("content.genre_film_work", 1000),
         ("content.person_film_work", 1000),
     )
 

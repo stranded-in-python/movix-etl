@@ -17,7 +17,7 @@ class CrewMember(BaseModel):
 class FilmWork(BaseModel):
     id: UUID
     title: str
-    description: str = ""
+    description: str | None
     rating: float
     genre: list[str]
     actors: list[CrewMember]
