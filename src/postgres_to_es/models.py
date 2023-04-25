@@ -23,3 +23,4 @@ class FilmWork(BaseModel):
     actors: list[CrewMember]
     directors: list[CrewMember]
     writers: list[CrewMember]
+    genres: list[CrewMember]

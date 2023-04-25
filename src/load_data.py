@@ -21,7 +21,7 @@ logger = logging.getLogger()
 logger.setLevel(os.environ.get("ETL_LOG_LEVEL", logging.INFO))
 
 
-class ExtractionManager:
+class ExtractionMoviesManager:
     def __init__(
         self,
         postgres: PostgresConnectionManager,
@@ -76,7 +76,7 @@ def transfer():
                 RedisConnectionManager() as redis,
             ):
                 logging.info("Connected")
-                manager = ExtractionManager(postgres, redis, elastic)
+                manager = ExtractionMoviesManager(postgres, redis, elastic)
                 manager.execute_etl()
         except Exception as e:
             logging.error(type(e))

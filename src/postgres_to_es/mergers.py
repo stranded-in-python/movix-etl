@@ -71,7 +71,13 @@ class FilmWorkPostgresMerger(PostgresMerger):
                    )
                ) FILTER (WHERE p.id is not null and pfw.role = 'writer'),
                '[]'
-           ) as writers """
+           ) as writers ,"""
+            """COALESCE (
+                json_agg(
+                    DISTINCT jsonb_build_object('id', g.id, 'name', g.name)
+                ) FILTER (WHERE g.id is not null and gfw.genre_id = g.id),
+                '[]'
+            ) as genres """
             "FROM content.film_work fw "
             "LEFT JOIN content.person_film_work pfw ON pfw.film_work_id = fw.id "
             "LEFT JOIN content.person p ON p.id = pfw.person_id "
