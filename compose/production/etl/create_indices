@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+/create_movie_index
+/create_genre_index
+/create_person_index

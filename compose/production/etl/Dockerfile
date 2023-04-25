@@ -59,9 +59,21 @@ COPY ./compose/production/etl/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
+COPY ./compose/production/etl/create_indices /create_indices
+RUN sed -i 's/\r$//g' /create_indices
+RUN chmod +x /create_indices
+
 COPY ./compose/production/etl/create_movie_index /create_movie_index
 RUN sed -i 's/\r$//g' /create_movie_index
 RUN chmod +x /create_movie_index
+
+COPY ./compose/production/etl/create_genre_index /create_genre_index
+RUN sed -i 's/\r$//g' /create_genre_index
+RUN chmod +x /create_genre_index
+
+COPY ./compose/production/etl/create_person_index /create_person_index
+RUN sed -i 's/\r$//g' /create_person_index
+RUN chmod +x /create_person_index
 
 COPY ./compose/production/etl/start /start
 RUN sed -i 's/\r$//g' /start
