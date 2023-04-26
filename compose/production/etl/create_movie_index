@@ -102,7 +102,20 @@ create_index() {
             "id": {
               "type": "keyword"
             },
-            "name": {
+            "full_name": {
+              "type": "text",
+              "analyzer": "ru_en"
+            }
+          }
+        },
+        "directors": {
+          "type": "nested",
+          "dynamic": "strict",
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "full_name": {
               "type": "text",
               "analyzer": "ru_en"
             }
@@ -115,7 +128,7 @@ create_index() {
             "id": {
               "type": "keyword"
             },
-            "name": {
+            "full_name": {
               "type": "text",
               "analyzer": "ru_en"
             }

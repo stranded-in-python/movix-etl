@@ -49,7 +49,7 @@ class FilmWorkPostgresMerger(PostgresMerger):
                json_agg(
                    DISTINCT jsonb_build_object(
                        'id', p.id,
-                       'name', p.full_name
+                       'full_name', p.full_name
                    )
                ) FILTER (WHERE p.id is not null and pfw.role = 'actor'),
                '[]'
@@ -58,7 +58,7 @@ class FilmWorkPostgresMerger(PostgresMerger):
                json_agg(
                    DISTINCT jsonb_build_object(
                        'id', p.id,
-                       'name', p.full_name
+                       'full_name', p.full_name
                    )
                ) FILTER (WHERE p.id is not null and pfw.role = 'director'),
                '[]'
@@ -67,7 +67,7 @@ class FilmWorkPostgresMerger(PostgresMerger):
                json_agg(
                    DISTINCT jsonb_build_object(
                        'id', p.id,
-                       'name', p.full_name
+                       'full_name', p.full_name
                    )
                ) FILTER (WHERE p.id is not null and pfw.role = 'writer'),
                '[]'

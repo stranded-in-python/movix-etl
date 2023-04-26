@@ -13,7 +13,7 @@ class Transformer(ABC):
 
 class FilmWork2MoviesTransformer(Transformer):
     def person_names(self, persons: Iterable[Mapping[str, str]]):
-        return [person["name"] for person in persons]
+        return [person["full_name"] for person in persons]
 
     def transform_single(self, entry: FilmWork) -> dict[str, Any]:
         state = entry.dict()
@@ -22,7 +22,6 @@ class FilmWork2MoviesTransformer(Transformer):
             del state["rating"]
 
             state["director"] = " ".join(self.person_names(state["directors"]))
-            del state["directors"]
 
             state["actors_names"] = self.person_names(state["actors"])
             state["writers_names"] = self.person_names(state["writers"])

@@ -11,6 +11,11 @@ class Entry(BaseModel):
 
 class CrewMember(BaseModel):
     id: UUID
+    full_name: str
+
+
+class Genre(BaseModel):
+    id: UUID
     name: str
 
 
@@ -23,4 +28,4 @@ class FilmWork(BaseModel):
     actors: list[CrewMember]
     directors: list[CrewMember]
     writers: list[CrewMember]
-    genres: list[CrewMember]
+    genres: list[Genre]
