@@ -64,7 +64,7 @@ create_index() {
         "id": {
           "type": "keyword"
         },
-        "name": {
+        "full_name": {
           "type": "text",
           "analyzer": "ru_en"
         }
