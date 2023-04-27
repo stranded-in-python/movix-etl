@@ -84,16 +84,13 @@ create_index() {
           "analyzer": "ru_en"
         },
         "director": {
-          "type": "text",
-          "analyzer": "ru_en"
+          "type": "text"
         },
         "actors_names": {
-          "type": "text",
-          "analyzer": "ru_en"
+          "type": "text"
         },
         "writers_names": {
-          "type": "text",
-          "analyzer": "ru_en"
+          "type": "text"
         },
         "actors": {
           "type": "nested",
