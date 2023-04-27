@@ -125,11 +125,11 @@ def backing_connect(connector: Connector) -> Callable:
                     is_connected = False
                     time_passed += wait
                     wait = (
-                        wait * settings.WAITING_FACTOR
-                        if wait < settings.WAITING_INTERVAL
-                        else settings.WAITING_INTERVAL
+                        wait * settings.waiting_factor
+                        if wait < settings.waiting_interval
+                        else settings.waiting_interval
                     )
-                    logging.info(f"Sleeping for {wait} seconds")
+                    logging.debug(f"Sleeping for {wait} seconds")
                     sleep(wait)
             raise ConnectionFailedError("Waiting for connection exceeded limit")
 
@@ -144,7 +144,6 @@ class ConnectionManager:
         self._connection = None
 
     def back_connection(self) -> Callable:
-        logging.debug("Backing connection...")
         return backing_connect(self.connector)
 
     def get_connection(self) -> pg_connection | Redis | Elasticsearch:
@@ -163,20 +162,19 @@ class ConnectionManager:
         self._connection = connection
 
     def __exit__(self, *args):
-        if not self.connection:
+        if not self._connection:
             return
 
-        self.connection.close()
-        self.connection = None  # type: ignore
+        self._connection.close()
+        self._connection = None  # type: ignore
+        logging.debug("Closed connection")
 
     def __enter__(self):
         return self
 
 
 class RedisConnectionManager(ConnectionManager):
-    def __init__(self, connector: None | RedisConnector = None):
-        if not connector:
-            connector = RedisConnector()
+    def __init__(self, connector: RedisConnector):
         super().__init__(connector)
 
     def get_connection(self) -> Redis:
@@ -184,9 +182,7 @@ class RedisConnectionManager(ConnectionManager):
 
 
 class PostgresConnectionManager(ConnectionManager):
-    def __init__(self, connector: None | PostgresConnector = None):
-        if not connector:
-            connector = PostgresConnector()
+    def __init__(self, connector: PostgresConnector):
         self.cursor_name_prefix = 1
         super().__init__(connector)
 
@@ -244,7 +240,7 @@ class PostgresConnectionManager(ConnectionManager):
                 if len(rows) > 0:
                     yield rows
                 else:
-                    break
+                    return
 
     def fetchall(
         self, sql: str, sql_vars: Any = None, itersize: int = 0
@@ -280,9 +276,7 @@ class PostgresConnectionManager(ConnectionManager):
 
 
 class ElasticConnectionManager(ConnectionManager):
-    def __init__(self, connector: None | ElasticConnector = None):
-        if not connector:
-            connector = ElasticConnector()
+    def __init__(self, connector: ElasticConnector):
         super().__init__(connector)
 
     def get_connection(self) -> Elasticsearch:
@@ -293,8 +287,8 @@ class ElasticConnectionManager(ConnectionManager):
             rows_count, errors = self.back_connection()(bulk)(
                 self.connection, operations
             )
-            logging.info(f"Persisted {rows_count} entries")
-            logging.info(f"Persisted with errors: {errors}")
+            logging.debug(f"Persisted {rows_count} entries")
+            logging.debug(f"Persisted with errors: {errors}")
         except BulkIndexError as e:
             logging.error(e.errors)
             raise DataInconsistentError(e)

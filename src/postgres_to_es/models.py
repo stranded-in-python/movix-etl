@@ -1,28 +1,25 @@
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 
 
 class Entry(BaseModel):
     id: UUID
     modified: datetime
-    _transform_elastic = validator("id", allow_reuse=True)(lambda x: str(x) if x else x)
 
 
 class CrewMember(BaseModel):
     id: UUID
     full_name: str
-    _transform_elastic = validator("id", allow_reuse=True)(lambda x: str(x) if x else x)
 
 
 class Genre(BaseModel):
     id: UUID
     name: str
-    _transform_elastic = validator("id", allow_reuse=True)(lambda x: str(x) if x else x)
 
 
-class FilmWork(BaseModel):
+class FilmWorkDocument(BaseModel):
     id: UUID
     title: str
     description: str | None
@@ -32,4 +29,14 @@ class FilmWork(BaseModel):
     directors: tuple[CrewMember, ...]
     writers: tuple[CrewMember, ...]
     genres: tuple[Genre, ...]
-    _transform_elastic = validator("id", allow_reuse=True)(lambda x: str(x) if x else x)
+
+
+class PersonDocument(BaseModel):
+    id: UUID
+    full_name: str
+
+
+class GenreDocument(BaseModel):
+    id: UUID
+    name: str
+    description: str | None
