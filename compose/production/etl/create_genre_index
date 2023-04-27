@@ -65,7 +65,12 @@ create_index() {
           "type": "keyword"
         },
         "name": {
-          "type": "keyword"
+          "type": "text",
+          "analyzer": "ru_en"
+        },
+        "description": {
+          "type": "text",
+          "analyzer": "ru_en"
         }
       }
     }
