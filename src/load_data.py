@@ -170,7 +170,7 @@ def transfer():
         except Exception as e:
             logging.error(type(e))
             logging.error(e)
-            logging.error(f"Exited scan...")
+            logging.error("Exited scan...")
             return
 
 
