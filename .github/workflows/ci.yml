@@ -92,7 +92,7 @@ jobs:
           file: "./compose/production/etl/Dockerfile"
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/stranded-in-python/movix-etl:unstable
+            ghcr.io/stranded-in-python/movix-etl:latest
           labels: |
             maintainer=${{ github.actor }}
             build-date=${{ github.event.head_commit.timestamp }}
