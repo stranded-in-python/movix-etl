@@ -5,7 +5,7 @@ This is a microservice that fills indices of Elasticsearch.
 
 ## What is under the hood?
 
-`Python3`, `elasticsearch-py`, `psycopg2` 
+`Python3`, `elasticsearch-py`, `psycopg2`
 
 ## How to install
 
